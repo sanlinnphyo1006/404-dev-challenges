@@ -1,6 +1,10 @@
+import { useState } from "react";
 import ScarecrowImg from "./assets/scarecrow.png";
 
 const App = () => {
+  const [isImgLoading, setIsImgLoading] = useState(true);
+
+  const handleLoad = () => setIsImgLoading(false);
   return (
     <div className="max-w-screen-xl mx-auto">
       <div className="px-4 grid grid-rows-[min-content_1fr_2rem] min-h-screen">
@@ -27,12 +31,20 @@ const App = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-14">
-          <div className="w-full">
+          <div
+            className={`w-full relative ${
+              isImgLoading ? "loading-img-container" : ""
+            }`}
+          >
             <img
-              className="w-full max-w-xs mx-auto lg:max-w-md"
+              className={`w-full max-w-xs mx-auto lg:max-w-md ${
+                isImgLoading ? "opacity-0" : ""
+              }`}
               src={ScarecrowImg}
               alt=""
+              onLoad={handleLoad}
             />
+            {isImgLoading ? <span className="loading-indicator"></span> : null}
           </div>
           <div className="w-full">
             <h1 className="text-5xl font-bold">I have bad news for you</h1>
